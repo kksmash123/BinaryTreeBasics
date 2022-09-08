@@ -29,7 +29,8 @@ int countNodeTree(struct Node* p);
 int countDeg2(struct Node* p);
 int countLeafNode(struct Node* p);
 int countDeg1(struct Node* p);
-
+int HeightTree(struct Node* p);
+int countD1D2Nodes(struct Node* p);
 
 
 
@@ -147,9 +148,11 @@ int countDeg1(struct Node* p)
         return 0;
 
     if (p->lc && !p->rc || p->rc && !p->lc)
-        return 1;
+        return countDeg1(p->lc) + countDeg1(p->rc) + 1;
 
-    return countDeg1(p->lc) + countDeg1(p->rc);
+    else
+        return countDeg1(p->lc) + countDeg1(p->rc);
+
 }
 
 //int countDeg1XOR(struct Node* p)
@@ -162,6 +165,35 @@ int countDeg1(struct Node* p)
 //
 //
 //}
+
+int HeightTree(struct Node* p)
+{
+    int x, y;
+
+    if (!p)
+        return 0;
+    
+    x = HeightTree(p->lc);
+    y = HeightTree(p->rc);
+
+    if (x > y)
+        return x + 1;
+    else
+        return y + 1;
+}
+
+int countD1D2Nodes(struct Node* p)
+{
+    if (!p || (!p->lc && !p->rc) )
+        return 0;
+
+    if (p->lc || p->rc)
+    return countD1D2Nodes(p->lc) + countD1D2Nodes(p->rc)+1;
+
+
+
+}
+
 
 
 int main()
@@ -182,12 +214,18 @@ int main()
 
     cout <<endl<< "Tree Components ." << endl;
 
-    cout << "Height of the tree : " << countNodeTree(root) << endl;
+    cout << "Total count of Nodes in a tree : " << countNodeTree(root) << endl;
 
     cout << "count of Degree 2 Nodes: " << countDeg2(root) << endl;
 
     cout << "count leaf nodes in tree : " << countLeafNode(root) << endl;
 
-    cout << "count of Degree 1 Nodes : " << countDeg1(root);
+    cout << "count of Degree 1 Nodes : " << countDeg1(root) << endl;
+
+    cout << "Height of the tree : " << HeightTree(root) << endl;
+
+    cout << "count of Deg1 and deg2 nodes in tree : " << countD1D2Nodes(root) << endl;
+
+
     
 }
