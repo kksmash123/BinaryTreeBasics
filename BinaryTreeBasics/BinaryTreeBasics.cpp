@@ -184,13 +184,13 @@ int HeightTree(struct Node* p)
 
 int countD1D2Nodes(struct Node* p)
 {
-    if (!p || (!p->lc && !p->rc) )
+    if (!p)
         return 0;
 
     if (p->lc || p->rc)
     return countD1D2Nodes(p->lc) + countD1D2Nodes(p->rc)+1;
 
-
+    return 0;
 
 }
 
